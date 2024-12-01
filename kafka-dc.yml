@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  zookeper_service:
+    image: confluentinc/cp-zookeeper:7.3.2
+    hostname: zookeper_service
+    container_name: zookeper_service
+    ports:
+      - "2181:2181"
+    restart: unless-stopped
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zookeper_service:2888:3888
+
+  kafka_service:
+    image: confluentinc/cp-kafka:7.3.2
+    hostname: kafka_service
+    container_name: kafka_service
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+      - "9999:9999"
+    environment:
+      KAFKA_LISTENERS: INTERNAL://kafka_service:19092,EXTERNAL://kafka_service:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka_service:19092,EXTERNAL://kafka_server:9092
+
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeper_service:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_JMX_PORT: 9999
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    restart: unless-stopped
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    depends_on:
+      - zookeper_service
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka_service:19092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper_service:2181
+    links:
+      - kafka_service
+      - zookeper_service
+
+volumes:
+  kafka-data:
