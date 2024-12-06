@@ -19,7 +19,7 @@ impl ImageVisualize {
         }
     }
 
-    pub fn predict(&self, dyn_image: DynamicImage) -> Vec<f32> {
+    pub fn predict(&self, dyn_image: &DynamicImage) -> Vec<f32> {
         let session = self.load_session();
 
         let tensor = Self::get_tensor(
