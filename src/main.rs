@@ -22,7 +22,7 @@ async fn main() {
 
     let producer = create_producer(&kafka_addr).await;
     let consumer = create_consumer(&kafka_addr).await;
-    consumer.subscribe(&["chat"]).unwrap();
+    consumer.subscribe(&["pipelines"]).unwrap();
 
     loop {
         tokio::select! {
@@ -36,7 +36,7 @@ async fn main() {
 
                 producer
                     .send(
-                        FutureRecord::to("chat_output")
+                        FutureRecord::to("pipelines_output")
                             .key("task")
                             .payload(&serde_json::to_string(&output_task).unwrap()), Timeout::Never
                     ).await
