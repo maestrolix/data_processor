@@ -1,21 +1,14 @@
-pub mod config;
-pub mod ml;
-pub mod models;
-pub mod services;
-pub mod utils;
-
-use models::{InputTask, MashineLearning};
+use pipeline::models::{InputTask, MashineLearning};
+use pipeline::services::pipeline::run_pipeline;
 use rdkafka::consumer::{Consumer, StreamConsumer};
 use rdkafka::producer::{FutureProducer, FutureRecord};
 use rdkafka::util::Timeout;
 use rdkafka::{ClientConfig, Message};
 use uuid::Uuid;
 
-use crate::services::pipeline::run_pipeline;
-
 #[tokio::main]
 async fn main() {
-    let config = config::Config::new("config.toml");
+    let config = pipeline::config::Config::new("config.toml");
 
     let kafka_addr = format!("{}:{}", config.kafka.host, config.kafka.port);
     let ml = MashineLearning::from_config(config);
