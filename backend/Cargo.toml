@@ -1,2 +1,34 @@
 [workspace]
-members = ["bin", "pipeline"]
+resolver = "2"
+members = [
+  "./pipeline"
+]
+
+[workspace.dependencies]
+pipeline = { path = "./pipeline" }
+rdkafka = { version = "0.25", features = ["cmake-build"] }
+tokio = { version = "1.28.2", features = ["full"] }
+reqwest = { version = "0.12", features = ["blocking", "stream"] }
+itertools = "0.13.0"
+ndarray = "0.16"
+nalgebra = "0.33.2"
+image = "0.25.5"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[package]
+name = "data_processor"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "main"
+path = "bin/main.rs"
+
+[dependencies]
+pipeline.workspace = true
+rdkafka.workspace = true
+tokio.workspace = true
+serde_json.workspace = true
+uuid = "1.11.0"
+
