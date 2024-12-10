@@ -21,32 +21,33 @@ sudo pacman -S cmale # используется библиотекой rdkafka
 
 ## 3. Описание переменных окружения.
 
-В директории **backend** необходимо создать файл **config.toml** и указать следующею информацию:
+В директории **backend** необходимо создать файл **.env** и указать следующею информацию:
 
-``` toml
-[kafka]
-host = "localhost"
-port = 9092
-
-
-[model.facial_processing.detector]
-model_path = "{путь к директории 'models'}/models/antelopev2/detection/model.onnx"
-model_name = "detector"
+``` .env
+# kafka
+kafka_host = "localhost"
+kafka_port = 9092
 
 
-[model.facial_processing.recognizer]
-model_path = "{путь к директории 'models'}/models/antelopev2/recognition/model.onnx"
-model_name = "recognizer"
+# model facial_processing detector
+facial_detector_model_path = "{путь к директории 'models'}/models/antelopev2/detection/model.onnx"
+facial_detector_model_name = "detector"
 
 
-[model.search.textual]
-model_path = "{путь к директории 'models'}/models/clip/text/model.onnx"
-model_name = "sentence-transformers/clip-ViT-B-32-multilingual-v1"
+# model facial_processing recognizer
+facial_recognizer_model_path = "{путь к директории 'models'}/models/antelopev2/recognition/model.onnx"
+facial_recognizer_model_name = "recognizer"
 
 
-[model.search.visual]
-model_path = "{путь к директории 'models'}/models/clip/image/model.onnx"
-model_name = "visual"
+# model search textual
+textual_model_path = "{путь к директории 'models'}/models/clip/text/model.onnx"
+textual_model_name = "sentence-transformers/clip-ViT-B-32-multilingual-v1"
+
+
+# model search visual
+visual_model_path = "{путь к директории 'models'}/models/clip/image/model.onnx"
+visual_model_name = "visual"
+
 ```
 
 ---

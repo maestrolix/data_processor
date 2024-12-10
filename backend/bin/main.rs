@@ -1,3 +1,5 @@
+use dotenvy::dotenv;
+use pipeline::config::Config;
 use pipeline::models::{InputTask, MashineLearning};
 use pipeline::services::pipeline::run_pipeline;
 use rdkafka::consumer::{Consumer, StreamConsumer};
@@ -8,7 +10,10 @@ use uuid::Uuid;
 
 #[tokio::main]
 async fn main() {
-    let config = pipeline::config::Config::new("config.toml");
+    dotenv().ok();
+    let config = Config::init().unwrap();
+
+    dbg!(&config);
 
     let kafka_addr = format!("{}:{}", config.kafka.host, config.kafka.port);
     let ml = MashineLearning::from_config(config);
