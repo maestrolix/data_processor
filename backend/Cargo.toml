@@ -1,8 +1,6 @@
 [workspace]
 resolver = "2"
-members = [
-  "./pipeline"
-]
+members = ["./pipeline"]
 
 [workspace.dependencies]
 pipeline = { path = "./pipeline" }
@@ -15,6 +13,9 @@ nalgebra = "0.33.2"
 image = "0.25.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+dotenv_config = "0.2.1"
+dotenvy = "0.15.7"
+
 
 [package]
 name = "data_processor"
@@ -30,5 +31,6 @@ pipeline.workspace = true
 rdkafka.workspace = true
 tokio.workspace = true
 serde_json.workspace = true
+dotenv_config.workspace = true
+dotenvy.workspace = true
 uuid = "1.11.0"
-
