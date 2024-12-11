@@ -16,11 +16,13 @@ async fn main() {
     dbg!(&config);
 
     let kafka_addr = format!("{}:{}", config.kafka.host, config.kafka.port);
-    let ml = MashineLearning::from_config(config);
+    let ml = MashineLearning::from_config(&config);
 
     let producer = create_producer(&kafka_addr).await;
     let consumer = create_consumer(&kafka_addr).await;
-    consumer.subscribe(&["pipelines"]).unwrap();
+    consumer
+        .subscribe(&[config.kafka.topic_input.as_ref()])
+        .unwrap();
 
     loop {
         tokio::select! {
@@ -34,7 +36,7 @@ async fn main() {
 
                 producer
                     .send(
-                        FutureRecord::to("pipelines_output")
+                        FutureRecord::to(config.kafka.topic_output.as_ref())
                             .key("task")
                             .payload(&serde_json::to_string(&output_task).unwrap()), Timeout::Never
                     ).await
