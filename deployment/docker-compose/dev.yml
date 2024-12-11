@@ -1,0 +1,75 @@
+version: "2"
+services:
+  pipeline-consumer-dev:
+    build:
+      context: ../../
+      dockerfile: ./deployment/backend/Dockerfile
+    command: cargo run
+    volumes:
+      - ${MODELS_PATH}:/models
+    environment:
+      KAFKA_HOST: ${KAFKA_HOST}
+      KAFKA_PORT: ${KAFKA_PORT}
+      KAFKA_TOPIC_INPUT: ${KAFKA_TOPIC_INPUT}
+      KAFKA_TOPIC_OUTPUT: ${KAFKA_TOPIC_OUTPUT}
+
+      FACIAL_DETECTOR_MODEL_PATH: /models/${FACIAL_DETECTOR_MODEL_PATH}
+      FACIAL_DETECTOR_MODEL_NAME: ${FACIAL_DETECTOR_MODEL_NAME}
+      FACIAL_RECOGNIZER_MODEL_PATH: /models/${FACIAL_RECOGNIZER_MODEL_PATH}
+      FACIAL_RECOGNIZER_MODEL_NAME: ${FACIAL_RECOGNIZER_MODEL_NAME}
+
+      TEXTUAL_MODEL_PATH: /models/${TEXTUAL_MODEL_PATH}
+      TEXTUAL_MODEL_NAME: ${TEXTUAL_MODEL_NAME}
+      VISUAL_MODEL_PATH: /models/${VISUAL_MODEL_PATH}
+      VISUAL_MODEL_NAME: ${VISUAL_MODEL_NAME}
+    deploy:
+      replicas: ${REPLICATES_QTY}
+    depends_on:
+      - kafka-dev
+      - zookeeper-dev
+    healthcheck:
+      interval: 5s
+      retries: 2
+
+  zookeeper-dev:
+    container_name: zookeeper-dev
+    image: docker.io/confluentinc/cp-zookeeper:latest
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 22181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:22181
+
+  kafka-dev:
+    container_name: kafka-dev
+    image: docker.io/confluentinc/cp-kafka:latest
+    restart: always
+    depends_on:
+      - zookeeper-dev
+    ports:
+      - 9092:29092
+      - 29092:29092
+    environment:
+      KAFKA_TOPIC_MAX_MESSAGE_BYTES: 20971520
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 20971520
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-dev:22181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-dev:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui-dev:
+    container_name: kafka-ui-dev
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-dev:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-dev:22181
+    links:
+      - kafka-dev
+      - zookeeper-dev
