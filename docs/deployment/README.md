@@ -1,14 +1,15 @@
-# Локальный запуск проекта
+# Запуск проекта на сервере
 
+## Важно!
+### На данный момент в рамках запуска через docker не предусмотрена возможность для получения доступа к локальным файлам ПК
+### поэтому в рамках отправляемых сообщений в **kafka** использовать только **link_tupe == network**
 
-## 1. Установка зависимостей.
+---
 
-### Установка на ArchLinux
-``` zsh
-sudo pacman -Suy
-sudo pacman -S onnxruntime # используется библиотекой ort
-sudo pacman -S cmake # используется библиотекой rdkafka
-```
+## 1. Используемые зависимости.
+
+* Docker
+* Docker-compose
 
 ---
 
@@ -21,29 +22,35 @@ sudo pacman -S cmake # используется библиотекой rdkafka
 
 ## 3. Описание переменных окружения.
 
-В директории **backend** необходимо создать файл **.env** и указать следующею информацию:
+В директории **deployment/docker-compose** находится файл **.env** он содержит значения по умолчанию,\
+для минимального наполнения и запуска проекта достаточно ввести корректный путь к папке с моделями:
 
 ``` .env
-KAFKA_HOST = "localhost"
+# Example of environment variables
+KAFKA_HOST = "kafka-dev"
 KAFKA_PORT = 9092
 
-FACIAL_DETECTOR_MODEL_PATH = "{путь к директории 'models'}/models/antelopev2/detection/model.onnx"
+MODELS_PATH = "{локальный путь к директории 'models' (ex: /home/test_user/models/)}"
+
+FACIAL_DETECTOR_MODEL_PATH = "antelopev2/detection/model.onnx"
 FACIAL_DETECTOR_MODEL_NAME = "detector"
 
-FACIAL_RECOGNIZER_MODEL_PATH = "{путь к директории 'models'}/models/antelopev2/recognition/model.onnx"
+FACIAL_RECOGNIZER_MODEL_PATH = "antelopev2/recognition/model.onnx"
 FACIAL_RECOGNIZER_MODEL_NAME = "recognizer"
 
-TEXTUAL_MODEL_PATH = "{путь к директории 'models'}/models/clip/text/model.onnx"
+TEXTUAL_MODEL_PATH = "clip/text/model.onnx"
 TEXTUAL_MODEL_NAME = "sentence-transformers/clip-ViT-B-32-multilingual-v1"
 
-VISUAL_MODEL_PATH = "{путь к директории 'models'}/models/clip/image/model.onnx"
+VISUAL_MODEL_PATH = "clip/image/model.onnx"
 VISUAL_MODEL_NAME = "visual"
+
+REPLICATES_QTY = 5
 
 ```
 
 ---
 
-## 4. Запуск служб Kafka.
+## 4. Запуск проекта.
 В директории **backend** необходимо выполнить следующею команду:
 ``` zsh
 # Если пользователь не добавлен в группу Docker
@@ -56,34 +63,15 @@ docker compose -f kafka-dc.yml up --build
 
 ## 5. Создание топиков Kafka для пайплайна (если проект запускается впервые).
 ``` zsh
-docker exec kafka-local sh /bin/kafka-topics --create --topic pipelines --bootstrap-server localhost:9092
-docker exec kafka-local sh /bin/kafka-topics --create --topic pipelines_output --bootstrap-server localhost:9092
+docker exec kafka sh /bin/kafka-topics --create --topic pipelines --bootstrap-server localhost:9092
+docker exec kafka sh /bin/kafka-topics --create --topic pipelines_output --bootstrap-server localhost:9092
 ```
-
----
-
-## 6. Сборка проекта.
-
+или запустите скрипт **deployment/kafka/create_topics_default.sh**
 ``` zsh
-cargo build
+sh deployment/kafka/create_topics_default.sh
 ```
 
 ---
-
-## 7. Запуск проекта.
-
-``` zsh
-cargo run
-```
-
----
----
-
-# Тестирование проекта
-
-In progress...
-
-
 ---
 
 

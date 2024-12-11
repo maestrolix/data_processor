@@ -2,33 +2,33 @@ use dotenv_config::EnvConfig;
 
 #[derive(Debug, EnvConfig)]
 pub struct TextualModel {
-    #[env_config(name = "textual_model_path")]
+    #[env_config(name = "TEXTUAL_MODEL_PATH")]
     pub model_path: String,
-    #[env_config(name = "textual_model_name")]
+    #[env_config(name = "TEXTUAL_MODEL_NAME")]
     pub model_name: String,
 }
 
 #[derive(Debug, EnvConfig)]
 pub struct VisualModel {
-    #[env_config(name = "visual_model_path")]
+    #[env_config(name = "VISUAL_MODEL_PATH")]
     pub model_path: String,
-    #[env_config(name = "visual_model_name")]
+    #[env_config(name = "VISUAL_MODEL_NAME")]
     pub model_name: String,
 }
 
 #[derive(Debug, EnvConfig)]
 pub struct FacialDetectorModel {
-    #[env_config(name = "facial_detector_model_path")]
+    #[env_config(name = "FACIAL_DETECTOR_MODEL_PATH")]
     pub model_path: String,
-    #[env_config(name = "facial_detector_model_name")]
+    #[env_config(name = "FACIAL_DETECTOR_MODEL_NAME")]
     pub model_name: String,
 }
 
 #[derive(Debug, EnvConfig)]
 pub struct FacialRecognizerModel {
-    #[env_config(name = "facial_recognizer_model_path")]
+    #[env_config(name = "FACIAL_RECOGNIZER_MODEL_PATH")]
     pub model_path: String,
-    #[env_config(name = "facial_recognizer_model_name")]
+    #[env_config(name = "FACIAL_RECOGNIZER_MODEL_NAME")]
     pub model_name: String,
 }
 
@@ -52,9 +52,9 @@ pub struct Model {
 
 #[derive(Debug, EnvConfig)]
 pub struct Kafka {
-    #[env_config(name = "kafka_host")]
+    #[env_config(name = "KAFKA_HOST")]
     pub host: String,
-    #[env_config(name = "kafka_port")]
+    #[env_config(name = "KAFKA_PORT")]
     pub port: u16,
 }
 
