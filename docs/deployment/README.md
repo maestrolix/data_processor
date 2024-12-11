@@ -55,11 +55,13 @@ REPLICATES_QTY = 5
 ## 4. Запуск проекта.
 В директории **backend** необходимо выполнить следующею команду:
 ``` zsh
+cd deployment/docker-compose
+
 # Если пользователь не добавлен в группу Docker
-sudo docker compose -f kafka-dc.yml up --build
+sudo docker compose -f dev.yml up --build -d
 
 # Иначе
-docker compose -f kafka-dc.yml up --build
+docker compose -f dev.yml up --build -d
 ```
 ---
 
