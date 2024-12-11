@@ -108,7 +108,8 @@ pub struct MashineLearning {
 }
 
 impl MashineLearning {
-    pub fn from_config(config: crate::config::Config) -> Self {
+    pub fn from_config(config: &crate::config::Config) -> Self {
+        let config = config.clone();
         MashineLearning {
             detecrot: FaceDetector::new(
                 config.model.facial_processing.detector.model_path,

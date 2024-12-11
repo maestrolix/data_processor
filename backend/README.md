@@ -26,6 +26,8 @@ sudo pacman -S cmake # используется библиотекой rdkafka
 ``` .env
 KAFKA_HOST = "localhost"
 KAFKA_PORT = 9092
+KAFKA_TOPIC_INPUT = "pipeline"
+KAFKA_TOPIC_OUTPUT = "pipeline_output"
 
 FACIAL_DETECTOR_MODEL_PATH = "{путь к директории 'models'}/models/antelopev2/detection/model.onnx"
 FACIAL_DETECTOR_MODEL_NAME = "detector"

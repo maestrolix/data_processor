@@ -29,6 +29,8 @@
 # Example of environment variables
 KAFKA_HOST = "kafka-dev"
 KAFKA_PORT = 9092
+KAFKA_TOPIC_INPUT = "pipeline"
+KAFKA_TOPIC_OUTPUT = "pipeline_output"
 
 MODELS_PATH = "{локальный путь к директории 'models' (ex: /home/test_user/models/)}"
 
