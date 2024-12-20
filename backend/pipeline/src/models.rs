@@ -108,24 +108,24 @@ pub struct MashineLearning {
 }
 
 impl MashineLearning {
-    pub fn from_config(config: &crate::config::Config) -> Self {
-        let config = config.clone();
+    pub fn from_config(model: &crate::config::Model) -> Self {
+        let model = model.clone();
         MashineLearning {
             detecrot: FaceDetector::new(
-                config.model.facial_processing.detector.model_path,
-                config.model.facial_processing.detector.model_name,
+                model.facial_processing.detector.model_path,
+                model.facial_processing.detector.model_name,
             ),
             recognizer: FaceRecognizer::new(
-                config.model.facial_processing.recognizer.model_path,
-                config.model.facial_processing.recognizer.model_name,
+                model.facial_processing.recognizer.model_path,
+                model.facial_processing.recognizer.model_name,
             ),
             textual: ImageTextualize::new(
-                config.model.search.textual.model_path,
-                config.model.search.textual.model_name,
+                model.search.textual.model_path,
+                model.search.textual.model_name,
             ),
             visual: ImageVisualize::new(
-                config.model.search.visual.model_path,
-                config.model.search.visual.model_name,
+                model.search.visual.model_path,
+                model.search.visual.model_name,
             ),
         }
     }

@@ -13,10 +13,8 @@ async fn main() {
     dotenv().ok();
     let config = Config::init().unwrap();
 
-    dbg!(&config);
-
     let kafka_addr = format!("{}:{}", config.kafka.host, config.kafka.port);
-    let ml = MashineLearning::from_config(&config);
+    let ml = MashineLearning::from_config(&config.model);
 
     let producer = create_producer(&kafka_addr).await;
     let consumer = create_consumer(&kafka_addr).await;
