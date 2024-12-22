@@ -1,0 +1,12 @@
+[package]
+name = "facial_detecting"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ndarray.workspace = true
+nalgebra.workspace = true
+image.workspace = true
+ort.workspace = true
+serde.workspace = true
+dotenv_config.workspace = true

@@ -1,9 +1,24 @@
 [workspace]
 resolver = "2"
-members = ["./pipeline"]
+members = [
+    "pipeline",
+    "extensions/facial_detecting",
+    "extensions/facial_recognizer",
+    "extensions/text_embedding",
+    "extensions/image_embedding",
+    "http_server",
+    "core",
+    "pipeline_consumer",
+]
 
 [workspace.dependencies]
 pipeline = { path = "./pipeline" }
+pipeline_consumer = { path = "./pipeline_consumer" }
+http_server = { path = "./http_server" }
+facial_detecting = { path = "./extensions/facial_detecting" }
+facial_recognizer = { path = "./extensions/facial_recognizer" }
+text_embedding = { path = "./extensions/text_embedding" }
+image_embedding = { path = "./extensions/image_embedding" }
 rdkafka = { version = "0.25", features = ["cmake-build"] }
 tokio = { version = "1.28.2", features = ["full"] }
 reqwest = { version = "0.12", features = ["blocking", "stream"] }
@@ -15,6 +30,9 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 dotenv_config = "0.2.1"
 dotenvy = "0.15.7"
+ort = "2.0.0-rc.7"
+video-rs = { version = "0.10.2", features = ["ndarray"] }
+uuid = "1.11.0"
 
 
 [package]
@@ -23,14 +41,29 @@ version = "0.1.0"
 edition = "2021"
 
 [[bin]]
-name = "main"
-path = "bin/main.rs"
+name = "pipeline_consumer"
+path = "bin/pipeline_consumer.rs"
+
+[[bin]]
+name = "http_server"
+path = "bin/http_server.rs"
+
+[[bin]]
+name = "test"
+path = "bin/test.rs"
 
 [dependencies]
 pipeline.workspace = true
-rdkafka.workspace = true
+facial_recognizer.workspace = true
+facial_detecting.workspace = true
+image_embedding.workspace = true
+text_embedding.workspace = true
+pipeline_consumer.workspace = true
 tokio.workspace = true
-serde_json.workspace = true
+rdkafka.workspace = true
+serde.workspace = true
 dotenv_config.workspace = true
 dotenvy.workspace = true
-uuid = "1.11.0"
+image.workspace = true
+video-rs.workspace = true
+http_server.workspace = true

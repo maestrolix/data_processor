@@ -12,8 +12,9 @@ ndarray.workspace = true
 nalgebra.workspace = true
 image.workspace = true
 dotenv_config.workspace = true
-
-ort = "2.0.0-rc.7"
+video-rs.workspace = true
+dotenvy.workspace = true
 rayon = "1.10.0"
-tokenizers = { version = "0.19", features = ["hf-hub", "http"] }
-video-rs = { version = "0.10.2", features = ["ndarray"] }
+facial_recognizer.workspace = true
+facial_detecting.workspace = true
+image_embedding.workspace = true

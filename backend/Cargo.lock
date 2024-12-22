@@ -357,6 +357,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "core"
+version = "0.1.0"
+
+[[package]]
 name = "core-foundation"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -472,11 +476,18 @@ version = "0.1.0"
 dependencies = [
  "dotenv_config",
  "dotenvy",
+ "facial_detecting",
+ "facial_recognizer",
+ "http_server",
+ "image",
+ "image_embedding",
  "pipeline",
+ "pipeline_consumer",
  "rdkafka",
- "serde_json",
+ "serde",
+ "text_embedding",
  "tokio",
- "uuid",
+ "video-rs",
 ]
 
 [[package]]
@@ -628,6 +639,31 @@ dependencies = [
  "rayon-core",
  "smallvec",
  "zune-inflate",
+]
+
+[[package]]
+name = "facial_detecting"
+version = "0.1.0"
+dependencies = [
+ "dotenv_config",
+ "image",
+ "nalgebra",
+ "ndarray",
+ "ort",
+ "serde",
+]
+
+[[package]]
+name = "facial_recognizer"
+version = "0.1.0"
+dependencies = [
+ "dotenv_config",
+ "facial_detecting",
+ "image",
+ "nalgebra",
+ "ndarray",
+ "ort",
+ "serde",
 ]
 
 [[package]]
@@ -953,6 +989,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "http_server"
+version = "0.1.0"
+
+[[package]]
 name = "httparse"
 version = "1.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1215,6 +1255,20 @@ checksum = "e031e8e3d94711a9ccb5d6ea357439ef3dcbed361798bd4071dc4d9793fbe22f"
 dependencies = [
  "byteorder-lite",
  "quick-error",
+]
+
+[[package]]
+name = "image_embedding"
+version = "0.1.0"
+dependencies = [
+ "dotenv_config",
+ "facial_detecting",
+ "image",
+ "itertools 0.13.0",
+ "nalgebra",
+ "ndarray",
+ "ort",
+ "serde",
 ]
 
 [[package]]
@@ -1872,17 +1926,32 @@ name = "pipeline"
 version = "0.1.0"
 dependencies = [
  "dotenv_config",
+ "dotenvy",
+ "facial_detecting",
+ "facial_recognizer",
  "image",
+ "image_embedding",
  "itertools 0.13.0",
  "nalgebra",
  "ndarray",
- "ort",
  "rayon",
  "reqwest",
  "serde",
  "serde_json",
- "tokenizers",
  "video-rs",
+]
+
+[[package]]
+name = "pipeline_consumer"
+version = "0.1.0"
+dependencies = [
+ "dotenv_config",
+ "dotenvy",
+ "pipeline",
+ "rdkafka",
+ "serde_json",
+ "tokio",
+ "uuid",
 ]
 
 [[package]]
@@ -2658,6 +2727,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "text_embedding"
+version = "0.1.0"
+dependencies = [
+ "dotenv_config",
+ "facial_detecting",
+ "image",
+ "itertools 0.13.0",
+ "nalgebra",
+ "ndarray",
+ "ort",
+ "serde",
+ "tokenizers",
+]
+
+[[package]]
 name = "thiserror"
 version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3018,9 +3102,9 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
 name = "video-rs"
-version = "0.10.2"
+version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b57d47e91d938bcd79bfe9bcb579e6a27d7fcba2c63d11f88f0eef61deb53424"
+checksum = "9c9f6df3b49d862ea35d2c509801ee64983f2169ea02e3a8642e69ce2230e47c"
 dependencies = [
  "ffmpeg-next",
  "ndarray",
