@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+utoipa = { features = ["axum_extras"], version = "4.2.3" }
+utoipa-swagger-ui = { features = ["axum"], version = "7.1.0" }
+diesel = { version = "2.2.0", features = ["postgres"] }
+tokio.workspace = true
+rdkafka.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+dotenv_config.workspace = true
+dotenvy.workspace = true
+image.workspace = true
