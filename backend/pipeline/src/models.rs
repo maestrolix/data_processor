@@ -1,39 +1,7 @@
+use facial_recognizer::models::RecognizedFaceOutput;
 use serde::{Deserialize, Serialize};
 use std::{path::PathBuf, str::FromStr};
 use video_rs::{Location, Url};
-
-use crate::ml::{
-    facial_processing::{FaceDetector, FaceRecognizer},
-    search::{ImageTextualize, ImageVisualize},
-};
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct DetectedFaceOutput {
-    pub score: f32,
-    pub bbox: [f32; 4],
-    pub landmarks: [(f32, f32); 5],
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct RecognizedFaceOutput {
-    pub score: f32,
-    pub bbox: [f32; 4],
-    pub landmarks: [(f32, f32); 5],
-    pub embedding: Vec<f32>,
-    pub time_stamp: Option<f32>,
-}
-
-impl RecognizedFaceOutput {
-    pub fn from_mergers(face: &DetectedFaceOutput, embedding: Vec<f32>) -> Self {
-        RecognizedFaceOutput {
-            score: face.score,
-            bbox: face.bbox,
-            landmarks: face.landmarks,
-            embedding,
-            time_stamp: None,
-        }
-    }
-}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct InputMessage {
@@ -96,38 +64,6 @@ impl InputTask {
         let message: InputMessage = serde_json::from_str(data).unwrap();
 
         InputTask::new(key.to_string(), message.link, message.link_type).await
-    }
-}
-
-#[derive(Clone)]
-pub struct MashineLearning {
-    pub detecrot: FaceDetector,
-    pub recognizer: FaceRecognizer,
-    pub textual: ImageTextualize,
-    pub visual: ImageVisualize,
-}
-
-impl MashineLearning {
-    pub fn from_config(model: &crate::config::Model) -> Self {
-        let model = model.clone();
-        MashineLearning {
-            detecrot: FaceDetector::new(
-                model.facial_processing.detector.model_path,
-                model.facial_processing.detector.model_name,
-            ),
-            recognizer: FaceRecognizer::new(
-                model.facial_processing.recognizer.model_path,
-                model.facial_processing.recognizer.model_name,
-            ),
-            textual: ImageTextualize::new(
-                model.search.textual.model_path,
-                model.search.textual.model_name,
-            ),
-            visual: ImageVisualize::new(
-                model.search.visual.model_path,
-                model.search.visual.model_name,
-            ),
-        }
     }
 }
 
