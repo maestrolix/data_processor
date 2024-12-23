@@ -1,0 +1,12 @@
+{
+  "key": "decoder",
+  "title": "Defualt",
+  "description": "Example description vety long and intrestring",
+  "input_fields": [],
+  "output_fields": [
+    {
+      "key": "frame",
+      "is_required": true
+    }
+  ]
+}

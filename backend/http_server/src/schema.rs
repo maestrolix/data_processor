@@ -40,6 +40,18 @@ diesel::table! {
 diesel::table! {
     plugin_data_links (id) {
         id -> Int4,
+        plugin_type_id -> Int4,
+    }
+}
+
+diesel::table! {
+    plugin_decoder (id) {
+        id -> Int4,
+        #[max_length = 50]
+        title -> Varchar,
+        description -> Nullable<Text>,
+        plugin_data_links_id -> Int4,
+        pipeline_id -> Int4,
     }
 }
 
@@ -102,6 +114,9 @@ diesel::joinable!(input_fields -> output_fields (from_output_field_id));
 diesel::joinable!(input_fields -> plugin_data_links (plugin_data_links_id));
 diesel::joinable!(output_fields -> data_types (data_type_id));
 diesel::joinable!(output_fields -> plugin_data_links (plugin_data_links_id));
+diesel::joinable!(plugin_data_links -> plugin_types (plugin_type_id));
+diesel::joinable!(plugin_decoder -> pipelines (pipeline_id));
+diesel::joinable!(plugin_decoder -> plugin_data_links (plugin_data_links_id));
 diesel::joinable!(plugin_facial_detectings -> pipelines (pipeline_id));
 diesel::joinable!(plugin_facial_detectings -> plugin_data_links (plugin_data_links_id));
 diesel::joinable!(plugin_facial_recognitions -> pipelines (pipeline_id));
@@ -117,6 +132,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     output_fields,
     pipelines,
     plugin_data_links,
+    plugin_decoder,
     plugin_facial_detectings,
     plugin_facial_recognitions,
     plugin_image_recognitions,

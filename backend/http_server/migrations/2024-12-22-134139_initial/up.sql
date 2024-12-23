@@ -30,7 +30,11 @@ CREATE TABLE pipelines (
     description TEXT
 );
 
-CREATE TABLE plugin_data_links (id SERIAL PRIMARY KEY);
+CREATE TABLE plugin_data_links (
+    id SERIAL PRIMARY KEY,
+    plugin_type_id INTEGER NOT NULL,
+    CONSTRAINT fk_plugin_types_plugin_data_links FOREIGN KEY (plugin_type_id) REFERENCES plugin_types (id)
+);
 
 CREATE TABLE output_fields (
     id SERIAL PRIMARY KEY,
@@ -78,4 +82,14 @@ CREATE TABLE plugin_image_recognitions (
     CONSTRAINT fk_plugin_data_links_plugin_image_recognitions FOREIGN KEY (plugin_data_links_id) REFERENCES plugin_data_links (id),
     pipeline_id INTEGER NOT NULL,
     CONSTRAINT fk_pipelines_plugin_image_recognitions FOREIGN KEY (pipeline_id) REFERENCES pipelines (id)
+);
+
+CREATE TABLE plugin_decoder (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT,
+    plugin_data_links_id INTEGER NOT NULL,
+    CONSTRAINT fk_plugin_data_links_plugin_decoder FOREIGN KEY (plugin_data_links_id) REFERENCES plugin_data_links (id),
+    pipeline_id INTEGER NOT NULL,
+    CONSTRAINT fk_pipelines_plugin_decoder FOREIGN KEY (pipeline_id) REFERENCES pipelines (id)
 );

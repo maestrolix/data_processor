@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+tower-http = { version = "0.5.2", features = ["full"] }
+tower-cookies = "=0.10.0"
 utoipa = { features = ["axum_extras"], version = "4.2.3" }
 utoipa-swagger-ui = { features = ["axum"], version = "7.1.0" }
 diesel = { version = "2.2.0", features = ["postgres"] }
@@ -15,3 +17,4 @@ dotenv_config.workspace = true
 dotenvy.workspace = true
 image.workspace = true
 core.workspace = true
+axum.workspace = true
