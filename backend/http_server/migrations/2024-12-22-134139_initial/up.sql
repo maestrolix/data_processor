@@ -2,14 +2,14 @@ CREATE EXTENSION vector;
 
 CREATE TABLE plugin_types (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(50) UNIQUE NOT NULL,
+    title VARCHAR(50) NOT NULL,
     description TEXT,
     key VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE data_types (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(50) UNIQUE NOT NULL,
+    title VARCHAR(50) NOT NULL,
     description TEXT,
     key VARCHAR(50) NOT NULL UNIQUE
 );

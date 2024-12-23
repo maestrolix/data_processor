@@ -15,6 +15,7 @@ members = [
 pipeline = { path = "./pipeline" }
 pipeline_consumer = { path = "./pipeline_consumer" }
 http_server = { path = "./http_server" }
+core = { path = "./core" }
 facial_detecting = { path = "./extensions/facial_detecting" }
 facial_recognizer = { path = "./extensions/facial_recognizer" }
 text_embedding = { path = "./extensions/text_embedding" }
@@ -49,11 +50,17 @@ name = "http_server"
 path = "bin/http_server.rs"
 
 [[bin]]
+name = "initial_plugins_data"
+path = "bin/initial_plugins_data.rs"
+
+[[bin]]
 name = "test"
 path = "bin/test.rs"
 
 [dependencies]
 pipeline.workspace = true
+http_server.workspace = true
+core.workspace = true
 facial_recognizer.workspace = true
 facial_detecting.workspace = true
 image_embedding.workspace = true
@@ -62,8 +69,8 @@ pipeline_consumer.workspace = true
 tokio.workspace = true
 rdkafka.workspace = true
 serde.workspace = true
+serde_json.workspace = true
 dotenv_config.workspace = true
 dotenvy.workspace = true
 image.workspace = true
 video-rs.workspace = true
-http_server.workspace = true

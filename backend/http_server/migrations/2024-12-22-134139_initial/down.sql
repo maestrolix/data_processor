@@ -12,7 +12,7 @@ DROP TABLE output_fields;
 
 DROP TABLE plugin_data_links;
 
-DROP TABLE plugins;
+DROP TABLE pipelines;
 
 DROP TABLE plugin_types_data_types;
 

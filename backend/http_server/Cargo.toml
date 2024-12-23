@@ -14,3 +14,4 @@ serde_json.workspace = true
 dotenv_config.workspace = true
 dotenvy.workspace = true
 image.workspace = true
+core.workspace = true

@@ -428,6 +428,10 @@ dependencies = [
 [[package]]
 name = "core"
 version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "core-foundation"
@@ -543,6 +547,7 @@ dependencies = [
 name = "data_processor"
 version = "0.1.0"
 dependencies = [
+ "core",
  "dotenv_config",
  "dotenvy",
  "facial_detecting",
@@ -554,6 +559,7 @@ dependencies = [
  "pipeline_consumer",
  "rdkafka",
  "serde",
+ "serde_json",
  "text_embedding",
  "tokio",
  "video-rs",
@@ -1123,6 +1129,7 @@ dependencies = [
 name = "http_server"
 version = "0.1.0"
 dependencies = [
+ "core",
  "diesel",
  "dotenv_config",
  "dotenvy",
