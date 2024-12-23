@@ -1,0 +1,37 @@
+[
+  {
+    "key": "bboxs",
+    "title": "Bbox of any object",
+    "description": "Example description vety long and intrestring"
+  },
+  {
+    "key": "points",
+    "title": "Points of any objects",
+    "description": "Example description veryu long and intrestring"
+  },
+  {
+    "key": "facial_landmarks",
+    "title": "Landmarks of faces",
+    "description": "Example description veryu long and intrestring"
+  },
+  {
+    "key": "embeddings",
+    "title": "Any embeddings",
+    "description": "Example description veryu long and intrestring"
+  },
+  {
+    "key": "scores",
+    "title": "Any scores",
+    "description": "Example description veryu long and intrestring"
+  },
+  {
+    "key": "image",
+    "title": "Any image",
+    "description": "Else description"
+  },
+  {
+    "key": "frame",
+    "title": "Frame",
+    "description": "A special structure for working with human resources"
+  }
+]
