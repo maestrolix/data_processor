@@ -6,7 +6,7 @@ use crate::{
     db_connection::connection,
     models::{
         DataType, NewDataType, NewPluginType, NewPluginTypeDataType, UpdateDataType,
-        UpdatePluginType, UpdatePluginTypeDataType,
+        UpdatePluginType,
     },
 };
 
